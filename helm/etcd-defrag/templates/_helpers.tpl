@@ -27,6 +27,7 @@ helm.sh/chart: {{ include "etcd-defrag.chart" . }}
 {{ include "etcd-defrag.selectorLabels" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
 {{- end }}
 
 {{/*
