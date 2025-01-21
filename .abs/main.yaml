@@ -1,4 +1,4 @@
+chart-dir: helm/etcd-defrag
 replace-chart-version-with-git: true
 generate-metadata: true
-chart-dir: ./helm/etcd-defrag-app
-destination: ./build
+catalog-base-url: https://giantswarm.github.io/default-catalog/
