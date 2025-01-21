@@ -17,7 +17,6 @@ etcd-defrag is an easy to use and smart etcd defragmentation tool.
 | caCertPath | string | `"/etc/kubernetes/pki/etcd/ca.crt"` | CA certificate path. |
 | clientCertPath | string | `"/etc/kubernetes/pki/apiserver-etcd-client.crt"` | Client certificate path. |
 | clientKeyPath | string | `"/etc/kubernetes/pki/apiserver-etcd-client.key"` | Client key path. |
-| cluster | bool | `true` | Whether to use all endpoints from the cluster member list or not. |
 | defragRule | string | `"dbQuotaUsage > 0.8 && dbSizeFree > dbQuota * 0.1"` | etcd defrag rule.  Available variables:  dbSize:       Total size of the etcd database. dbSizeInUse:  Total size in use of the etcd database. dbSizeFree:   Total size not in use of the etcd database, defined as dbSize - dbSizeInUse. dbQuota:      etcd storage quota in bytes (the value passed to etcd instance by flag --quota-backend-bytes). dbQuotaUsage: Total usage of the etcd storage quota, defined as dbSize/dbQuota.  dbQuota needs to be passed as etcdStorageQuotaBytes.  By default, we defragment if the quota usage is greater than 80% and the unused space makes up 10% of the quota. |
 | endpoints | list | `["https://127.0.0.1:2379"]` | etcd endpoints. |
 | etcdStorageQuotaBytes | int | `8589934592` | etcd storage quota in bytes (defaults to 8Gi). |
@@ -42,3 +41,4 @@ etcd-defrag is an easy to use and smart etcd defragmentation tool.
 | schedule | string | `"0 * * * *"` | Cron schedule. |
 | securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":0,"runAsNonRoot":false,"runAsUser":0,"seccompProfile":{"type":"RuntimeDefault"}}` | Container security context. |
 | tolerations | list | `[{"effect":"NoSchedule","key":"node-role.kubernetes.io/control-plane"},{"effect":"NoExecute","operator":"Exists"}]` | Tolerations. |
+| useClusterEndpoints | bool | `true` | Whether to use all endpoints from the cluster member list or not. |

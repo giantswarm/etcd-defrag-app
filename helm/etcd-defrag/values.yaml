@@ -61,7 +61,7 @@ endpoints:
 - https://127.0.0.1:2379
 
 # -- Whether to use all endpoints from the cluster member list or not.
-cluster: true
+useClusterEndpoints: true
 
 # -- etcd storage quota in bytes (defaults to 8Gi).
 etcdStorageQuotaBytes: 8589934592
