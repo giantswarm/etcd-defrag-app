@@ -61,7 +61,7 @@ spec:
             {{- else }}
             {{- fail ".Values.endpoints may not be empty!" }}
             {{- end }}
-            {{- if .Values.cluster }}
+            {{- if .Values.useClusterEndpoints }}
             - --cluster
             {{- end }}
             - --cacert=/ca.crt

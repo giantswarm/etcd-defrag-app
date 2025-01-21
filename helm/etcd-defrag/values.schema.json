@@ -57,9 +57,6 @@
         "clientKeyPath": {
             "type": "string"
         },
-        "cluster": {
-            "type": "boolean"
-        },
         "defragRule": {
             "type": "string"
         },
@@ -206,6 +203,9 @@
                     }
                 }
             }
+        },
+        "useClusterEndpoints": {
+            "type": "boolean"
         }
     }
 }
