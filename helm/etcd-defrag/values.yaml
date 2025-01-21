@@ -1,0 +1,129 @@
+# -- Common labels.
+labels: {}
+
+# -- Common annotations.
+annotations: {}
+
+# -- Cron schedule.
+schedule: 0 * * * *
+
+# -- Job labels.
+jobLabels: {}
+
+# -- Job annotations.
+jobAnnotations: {}
+
+# -- Pod labels.
+podLabels: {}
+
+# -- Pod annotations.
+podAnnotations: {}
+
+# -- Pod security context.
+podSecurityContext: {}
+
+# -- Wheter to use host network or not.
+hostNetwork: true
+
+# -- Wheter to auto-mount service account token or not.
+# This app does not require API access nor a service account, so it should also not require a service account token.
+automountServiceAccountToken: false
+
+# -- Image pull secrets.
+imagePullSecrets: []
+
+# -- Container security context.
+securityContext:
+  runAsNonRoot: false
+  runAsUser: 0
+  runAsGroup: 0
+  allowPrivilegeEscalation: false
+  seccompProfile:
+    type: RuntimeDefault
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+
+# -- Image settings.
+image:
+  # -- Image registry.
+  registry: gsoci.azurecr.io
+  # -- Image name.
+  image: giantswarm/etcd-defrag
+  # -- Image tag (defaults to .Chart.AppVersion).
+  tag: ""
+  # -- Image pull policy.
+  pullPolicy: IfNotPresent
+
+# -- etcd endpoints.
+endpoints:
+- https://127.0.0.1:2379
+
+# -- Whether to use all endpoints from the cluster member list or not.
+cluster: true
+
+# -- etcd storage quota in bytes (defaults to 8Gi).
+etcdStorageQuotaBytes: 8589934592
+
+# -- etcd defrag rule.
+#
+# Available variables:
+#
+# dbSize:       Total size of the etcd database.
+# dbSizeInUse:  Total size in use of the etcd database.
+# dbSizeFree:   Total size not in use of the etcd database, defined as dbSize - dbSizeInUse.
+# dbQuota:      etcd storage quota in bytes (the value passed to etcd instance by flag --quota-backend-bytes).
+# dbQuotaUsage: Total usage of the etcd storage quota, defined as dbSize/dbQuota.
+#
+# dbQuota needs to be passed as etcdStorageQuotaBytes.
+#
+# By default, we defragment if the quota usage is greater than 80% and the unused space makes up 10% of the quota.
+defragRule: dbQuotaUsage > 0.8 && dbSizeFree > dbQuota * 0.1
+
+# -- Additional arguments.
+args: []
+
+# -- Resource requests & limits.
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    # cpu: 100m
+    memory: 128Mi
+
+# -- CA certificate path.
+caCertPath: /etc/kubernetes/pki/etcd/ca.crt
+# -- Client certificate path.
+clientCertPath: /etc/kubernetes/pki/apiserver-etcd-client.crt
+# -- Client key path.
+clientKeyPath: /etc/kubernetes/pki/apiserver-etcd-client.key
+
+# -- Node selector.
+nodeSelector: {}
+
+# -- Affinity.
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+
+# -- Tolerations.
+tolerations:
+- key: node-role.kubernetes.io/control-plane
+  effect: NoSchedule
+- effect: NoExecute
+  operator: Exists
+
+# -- Restart policy.
+restartPolicy: OnFailure
+
+# -- Policy exception settings.
+policyException:
+  # -- Namespace.
+  # Useful for when policy exceptions are meant to be installed in a different namespace.
+  namespace: ""

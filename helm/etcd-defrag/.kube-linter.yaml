@@ -1,0 +1,4 @@
+checks:
+  exclude:
+  - host-network
+  - run-as-non-root

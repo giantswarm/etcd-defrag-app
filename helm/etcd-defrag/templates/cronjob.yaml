@@ -1,0 +1,120 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "etcd-defrag.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "etcd-defrag.labels" . | nindent 4 }}
+  {{- if .Values.labels }}
+  {{- toYaml .Values.labels | nindent 4 }}
+  {{- end }}
+  {{- if .Values.annotations }}
+  annotations: {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  schedule: {{ required ".Values.schedule may not be empty!" .Values.schedule | quote }}
+  jobTemplate:
+    metadata:
+      labels: 
+      {{- include "etcd-defrag.labels" . | nindent 8 }}
+      {{- if .Values.jobLabels }}
+      {{- toYaml .Values.jobLabels | nindent 8 }}
+      {{- end }}
+      {{- if .Values.jobAnnotations }}
+      annotations: {{- toYaml .Values.jobAnnotations | nindent 8 }}
+      {{- end }}
+    spec:
+      template:
+        metadata:
+          labels:
+          {{- include "etcd-defrag.labels" . | nindent 12 }}
+          {{- if .Values.podLabels }}
+          {{- toYaml .Values.podLabels | nindent 12 }}
+          {{- end }}
+          {{- if .Values.podAnnotations }}
+          annotations: {{- toYaml .Values.podAnnotations | nindent 12 }}
+          {{- end }}
+        spec:
+          {{- if .Values.podSecurityContext }}
+          securityContext: {{- toYaml .Values.podSecurityContext | nindent 12 }}
+          {{- end }}
+          hostNetwork: {{ .Values.hostNetwork }}
+          automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
+          {{- if .Values.imagePullSecrets }}
+          imagePullSecrets: {{- toYaml .Values.imagePullSecrets | nindent 10 }}
+          {{- end }}
+          containers:
+          - name: {{ include "etcd-defrag.name" . }}
+            {{- if .Values.securityContext }}
+            securityContext: {{- toYaml .Values.securityContext | nindent 14 }}
+            {{- end }}
+            {{- $registry := required ".Values.image.registry may not be empty!" .Values.image.registry }}
+            {{- $image := required ".Values.image.image may not be empty!" .Values.image.image }}
+            image: "{{ $registry }}/{{ $image }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            {{- if .Values.image.pullPolicy }}
+            imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+            {{- end }}
+            args:
+            {{- /* Sadly 'required' does not detect empty arrays. */}}
+            {{- if .Values.endpoints }}
+            - --endpoints={{ .Values.endpoints | join "," }}
+            {{- else }}
+            {{- fail ".Values.endpoints may not be empty!" }}
+            {{- end }}
+            {{- if .Values.cluster }}
+            - --cluster
+            {{- end }}
+            - --cacert=/ca.crt
+            - --cert=/client.crt
+            - --key=/client.key
+            {{- $etcdStorageQuotaBytes := int .Values.etcdStorageQuotaBytes }}
+            {{- if gt $etcdStorageQuotaBytes 0 }}
+            - --etcd-storage-quota-bytes={{ $etcdStorageQuotaBytes }}
+            {{- else }}
+            {{- fail ".Values.etcdStorageQuotaBytes must be greater than 0!" }}
+            {{- end }}
+            {{- if .Values.defragRule }}
+            - --defrag-rule
+            - {{ .Values.defragRule | quote }}
+            {{- end }}
+            {{- if .Values.args }}
+            {{- toYaml .Values.args | nindent 12 }}
+            {{- end }}
+            volumeMounts:
+            - name: ca-crt
+              mountPath: /ca.crt
+              readOnly: true
+            - name: client-crt
+              mountPath: /client.crt
+              readOnly: true
+            - name: client-key
+              mountPath: /client.key
+              readOnly: true
+            {{- if .Values.resources }}
+            resources: {{- toYaml .Values.resources | nindent 14 }}
+            {{- end }}
+          volumes:
+          - name: ca-crt
+            hostPath:
+              path: {{ required ".Values.caCertPath may not be empty!" .Values.caCertPath | quote }}
+              type: File
+          - name: client-crt
+            hostPath:
+              path: {{ required ".Values.clientCertPath may not be empty!" .Values.clientCertPath | quote }}
+              type: File
+          - name: client-key
+            hostPath:
+              path: {{ required ".Values.clientKeyPath may not be empty!" .Values.clientKeyPath | quote }}
+              type: File
+          {{- if .Values.nodeSelector }}
+          nodeSelector: {{- toYaml .Values.nodeSelector | nindent 12 }}
+          {{- end }}
+          {{- if .Values.affinity }}
+          affinity: {{- toYaml .Values.affinity | nindent 12 }}
+          {{- end }}
+          {{- if .Values.tolerations }}
+          tolerations: {{- toYaml .Values.tolerations | nindent 10 }}
+          {{- end }}
+          {{- if .Values.restartPolicy }}
+          restartPolicy: {{ .Values.restartPolicy | quote }}
+          {{- end }}
