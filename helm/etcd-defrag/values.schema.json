@@ -101,6 +101,9 @@
         "labels": {
             "type": "object"
         },
+        "moveLeader": {
+            "type": "boolean"
+        },
         "nodeSelector": {
             "type": "object"
         },

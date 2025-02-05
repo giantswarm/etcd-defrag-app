@@ -30,6 +30,7 @@ etcd-defrag is an easy to use and smart etcd defragmentation tool.
 | jobAnnotations | object | `{}` | Job annotations. |
 | jobLabels | object | `{}` | Job labels. |
 | labels | object | `{}` | Common labels. |
+| moveLeader | bool | `true` | Whether to move the leadership before performing defragmentation on the leader or not. |
 | nodeSelector | object | `{}` | Node selector. |
 | podAnnotations | object | `{}` | Pod annotations. |
 | podLabels | object | `{}` | Pod labels. |

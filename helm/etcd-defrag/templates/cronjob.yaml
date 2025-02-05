@@ -77,6 +77,9 @@ spec:
             - --defrag-rule
             - {{ .Values.defragRule | quote }}
             {{- end }}
+            {{- if .Values.moveLeader }}
+            - --move-leader
+            {{- end }}
             {{- if .Values.args }}
             {{- toYaml .Values.args | nindent 12 }}
             {{- end }}

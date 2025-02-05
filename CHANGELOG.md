@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Chart: Add `moveLeader`. ([#11](https://github.com/giantswarm/etcd-defrag-app/pull/11))
+
 ### Changed
 
 - Chart: Update dependency ahrtr/etcd-defrag to v0.23.0. ([#10](https://github.com/giantswarm/etcd-defrag-app/pull/10))
