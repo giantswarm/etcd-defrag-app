@@ -81,6 +81,9 @@ etcdStorageQuotaBytes: 8589934592
 # By default, we defragment if the quota usage is greater than 80% and the unused space makes up 10% of the quota.
 defragRule: dbQuotaUsage > 0.8 && dbSizeFree > dbQuota * 0.1
 
+# -- Whether to move the leadership before performing defragmentation on the leader or not.
+moveLeader: true
+
 # -- Additional arguments.
 args: []
 
