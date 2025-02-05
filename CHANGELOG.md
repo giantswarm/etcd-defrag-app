@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2025-02-05
+
 ### Added
 
 - Chart: Add `moveLeader`. ([#11](https://github.com/giantswarm/etcd-defrag-app/pull/11))
@@ -23,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2025-01-21
 
-[Unreleased]: https://github.com/giantswarm/etcd-defrag-app/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/giantswarm/etcd-defrag-app/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/giantswarm/etcd-defrag-app/compare/v0.1.1...v1.0.0
 [0.1.1]: https://github.com/giantswarm/etcd-defrag-app/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/giantswarm/etcd-defrag-app/releases/tag/v0.1.0
