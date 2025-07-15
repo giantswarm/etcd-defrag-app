@@ -2,7 +2,7 @@ apiVersion: v2
 name: etcd-defrag
 description: etcd-defrag is an easy to use and smart etcd defragmentation tool.
 type: application
-version: 1.0.5
+version: 1.0.6
 # repo: ahrtr/etcd-defrag
 appVersion: v0.29.0
 home: https://github.com/giantswarm/etcd-defrag-app
