@@ -4,7 +4,7 @@ description: etcd-defrag is an easy to use and smart etcd defragmentation tool.
 type: application
 version: 1.0.7
 # repo: ahrtr/etcd-defrag
-appVersion: v0.30.0
+appVersion: v0.31.0
 home: https://github.com/giantswarm/etcd-defrag-app
 icon: https://s.giantswarm.io/app-icons/giantswarm/1/dark.svg
 annotations:
