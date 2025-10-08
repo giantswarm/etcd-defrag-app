@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Chart: Update dependency ahrtr/etcd-defrag to v0.34.0. ([#62](https://github.com/giantswarm/etcd-defrag-app/pull/62))
+
 ## [1.2.0] - 2025-10-08
 
 ### Changed
