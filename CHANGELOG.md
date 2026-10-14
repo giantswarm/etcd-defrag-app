@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
+### Changed
 
-- The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
+- Chart: Update dependency ahrtr/etcd-defrag to v0.46.0. ([#156](https://github.com/giantswarm/etcd-defrag-app/pull/156))
 
 ## [1.2.12] - 2026-09-09
 
