@@ -1,3 +1,4 @@
+{{- if and .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.legacy.enabled }}
 {{- if .Capabilities.APIVersions.Has "kyverno.io/v2/PolicyException" -}}
 apiVersion: kyverno.io/v2
 kind: PolicyException
@@ -9,6 +10,7 @@ metadata:
   {{- if .Values.labels }}
   {{- toYaml .Values.labels | nindent 4 }}
   {{- end }}
+    policy.giantswarm.io/migrated-to-cel: "true"
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
   {{- if .Values.annotations }}
@@ -52,4 +54,5 @@ spec:
     - autogen-cronjob-restricted-volumes
     - autogen-restricted-volumes
     - restricted-volumes
+{{- end }}
 {{- end }}

@@ -125,6 +125,13 @@ tolerations:
 # -- Restart policy.
 restartPolicy: OnFailure
 
+kyvernoPolicyExceptions:
+  # -- Render the Kyverno PolicyExceptions.
+  enabled: true
+  legacy:
+    # -- Renders the kyverno.io/v2 PolicyException, which applies to ClusterPolicies only. Will be used as a global switch in a future release.
+    enabled: true
+
 # -- Policy exception settings.
 policyException:
   # -- Namespace.

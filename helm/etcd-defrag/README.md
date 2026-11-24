@@ -29,6 +29,8 @@ etcd-defrag is an easy to use and smart etcd defragmentation tool.
 | imagePullSecrets | list | `[]` | Image pull secrets. |
 | jobAnnotations | object | `{}` | Job annotations. |
 | jobLabels | object | `{}` | Job labels. |
+| kyvernoPolicyExceptions.enabled | bool | `true` | Render the Kyverno PolicyExceptions. |
+| kyvernoPolicyExceptions.legacy.enabled | bool | `true` | Renders the kyverno.io/v2 PolicyException, which applies to ClusterPolicies only. Will be used as a global switch in a future release. |
 | labels | object | `{}` | Common labels. |
 | moveLeader | bool | `true` | Whether to move the leadership before performing defragmentation on the leader or not. |
 | nodeSelector | object | `{}` | Node selector. |
