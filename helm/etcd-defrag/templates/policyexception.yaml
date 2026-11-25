@@ -4,7 +4,7 @@ apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
   name: {{ include "etcd-defrag.fullname" . }}
-  namespace: {{ .Values.policyException.namespace | default .Release.Namespace | quote }}
+  namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default .Release.Namespace | quote }}
   labels:
   {{- include "etcd-defrag.labels" . | nindent 4 }}
   {{- if .Values.labels }}

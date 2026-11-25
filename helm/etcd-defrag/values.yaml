@@ -128,12 +128,9 @@ restartPolicy: OnFailure
 kyvernoPolicyExceptions:
   # -- Render the Kyverno PolicyExceptions.
   enabled: true
+  # -- Namespace of the PolicyExceptions. Empty means the release namespace.
+  namespace: kube-system
   legacy:
     # -- Renders the kyverno.io/v2 PolicyException, which applies to ClusterPolicies only. Will be used as a global switch in a future release.
     enabled: true
 
-# -- Policy exception settings.
-policyException:
-  # -- Namespace.
-  # Useful for when policy exceptions are meant to be installed in a different namespace.
-  namespace: ""

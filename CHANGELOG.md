@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Label the `kyverno.io/v2` PolicyException with `policy.giantswarm.io/migrated-to-cel: "true"`, to mark it as migrated to CEL.
 - Add `kyvernoPolicyExceptions.enabled` to turn off both PolicyExceptions.
 
+### Changed
+
+- Replace `policyException.namespace` with `kyvernoPolicyExceptions.namespace`, which defaults to `kube-system`.
+
 ## [1.2.14] - 2026-11-12
 
 ### Changed
