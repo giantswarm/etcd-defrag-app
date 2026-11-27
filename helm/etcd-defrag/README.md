@@ -29,14 +29,15 @@ etcd-defrag is an easy to use and smart etcd defragmentation tool.
 | imagePullSecrets | list | `[]` | Image pull secrets. |
 | jobAnnotations | object | `{}` | Job annotations. |
 | jobLabels | object | `{}` | Job labels. |
+| kyvernoPolicyExceptions.enabled | bool | `true` | Render the Kyverno PolicyExceptions. |
+| kyvernoPolicyExceptions.legacy.enabled | bool | `true` | Renders the kyverno.io/v2 PolicyException, which applies to ClusterPolicies only. Will be used as a global switch in a future release. |
+| kyvernoPolicyExceptions.namespace | string | `"kube-system"` | Namespace of the PolicyExceptions. Empty means the release namespace. |
 | labels | object | `{}` | Common labels. |
 | moveLeader | bool | `true` | Whether to move the leadership before performing defragmentation on the leader or not. |
 | nodeSelector | object | `{}` | Node selector. |
 | podAnnotations | object | `{}` | Pod annotations. |
 | podLabels | object | `{}` | Pod labels. |
 | podSecurityContext | object | `{}` | Pod security context. |
-| policyException | object | `{"namespace":""}` | Policy exception settings. |
-| policyException.namespace | string | `""` | Namespace. Useful for when policy exceptions are meant to be installed in a different namespace. |
 | resources | object | `{"limits":{"memory":"128Mi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | Resource requests & limits. |
 | restartPolicy | string | `"OnFailure"` | Restart policy. |
 | schedule | string | `"0 * * * *"` | Cron schedule. |

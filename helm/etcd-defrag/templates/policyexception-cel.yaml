@@ -1,0 +1,44 @@
+{{- if .Values.kyvernoPolicyExceptions.enabled }}
+apiVersion: policies.kyverno.io/v1
+kind: PolicyException
+metadata:
+  name: {{ include "etcd-defrag.fullname" . }}
+  namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default .Release.Namespace | quote }}
+  labels:
+  {{- include "etcd-defrag.labels" . | nindent 4 }}
+  {{- if .Values.labels }}
+  {{- toYaml .Values.labels | nindent 4 }}
+  {{- end }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+  {{- if .Values.annotations }}
+  {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  policyRefs:
+  - name: disallow-host-namespaces
+    kind: ValidatingPolicy
+  - name: disallow-host-path
+    kind: ValidatingPolicy
+  - name: require-run-as-non-root-user
+    kind: ValidatingPolicy
+  - name: require-run-as-nonroot
+    kind: ValidatingPolicy
+  - name: restrict-volume-types
+    kind: ValidatingPolicy
+  # require-non-root-groups is missing from the legacy exception. It is excepted
+  # because the etcd-defrag CronJob, its Jobs and Pods fail it.
+  - name: require-non-root-groups
+    kind: ValidatingPolicy
+  # require-pod-probes is a supplemental policy and usually not enabled. It is
+  # excepted because the etcd-defrag Pods fail it when the policy is enforced.
+  - name: require-pod-probes
+    kind: ValidatingPolicy
+  matchConditions:
+  - name: etcd-defrag-workloads
+    expression: >-
+      request.kind.kind in ['CronJob', 'Job', 'Pod'] &&
+      request.namespace == '{{ .Release.Namespace }}' &&
+      has(object.metadata.name) &&
+      (object.metadata.name == '{{ include "etcd-defrag.fullname" . }}' || object.metadata.name.startsWith('{{ include "etcd-defrag.fullname" . }}-'))
+{{- end }}
